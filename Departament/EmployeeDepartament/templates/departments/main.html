@@ -1,0 +1,42 @@
+{% load mptt_tags %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отделы</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Древовидная структура отделов</h1>
+        <ul class="list-group">
+            {% recursetree departments %}
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span data-bs-toggle="collapse" href="#collapse{{ node.id }}" style="cursor: pointer;">
+                            {{ node.name }} ({{ node.employees.count }} сотрудников)
+                        </span>
+                    </div>
+                    <div id="collapse{{ node.id }}" class="collapse">
+                        <ul class="list-group mt-2">
+                            {% for employee in node.employees.all %}
+                                <li class="list-group-item">
+                                    {{ employee.name }} - {{ employee.position }}<br>
+                                    Дата приема на работу: {{ employee.hire_date }}<br>
+                                    Заработная плата: {{ employee.salary }} руб.
+                                </li>
+                            {% endfor %}
+                            {% if not node.is_leaf_node %}
+                                <ul class="list-unstyled">
+                                    {{ children }}
+                                </ul>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </li>
+            {% endrecursetree %}
+        </ul>
+    </div>
+</body>
+</html>
