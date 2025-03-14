@@ -15,7 +15,7 @@ class Command(BaseCommand):
         for i in range(1, 26):
             department = Department.objects.create(name=f'Отдел {i}', parent=root_department)
 
-        # Создание 50,000 сотрудников
+        # Создание 50 000 сотрудников
         for _ in range(50000):
             Employee.objects.create(
                 name=fake.name(),

@@ -7,7 +7,7 @@ from .models import Department, Employee
 class DepartmentAdmin(MPTTModelAdmin):
     list_display = ('name', 'parent')
     search_fields = ('name',)
-    mptt_level_indent = 20
+    mptt_level_indent = 30
 
 
 @admin.register(Employee)
@@ -15,3 +15,4 @@ class EmployeeAdmin(admin.ModelAdmin):
     list_display = ('name', 'position', 'department')
     list_filter = ('department', 'position')
     search_fields = ('name', 'position')
+    autocomplete_fields = ['department']
